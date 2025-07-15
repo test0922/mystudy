@@ -16,7 +16,7 @@ spring:
         password: nacos
       config:
         server-addr: 127.0.0.1:8848
-        file-extension: properties
+#        file-extension: properties
         namespace: efec4709-1489-4d23-9203-691f836e3afe
         group: dev
         refresh-enabled: true

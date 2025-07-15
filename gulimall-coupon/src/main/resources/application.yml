@@ -20,25 +20,25 @@ spring:
         namespace: 4d6c75bd-4089-47de-9184-14896b8594c7
         group: dev
         refresh-enabled: true
-        extension-configs:
-          - data-id: ${spring.application.name}
-            group: dev
-            refresh: true
-          - data-id: datasorcus.yaml
-            group: dev
-            refresh: true
-          - data-id: mybatis.yaml
-            group: dev
-            refresh: true
-          - data-id: other.yaml
-            group: dev
-            refresh: true
-#  config:
-#    import:
-#      - nacos:${spring.application.name}
-#      - nacos:mybatis.yaml
-#      - nacos:datasorcus.yaml
-#      - nacos:other.yaml
+#        extension-configs:
+#          - data-id: ${spring.application.name}
+#            group: dev
+#            refresh: true
+#          - data-id: datasorcus.yaml
+#            group: dev
+#            refresh: true
+#          - data-id: mybatis.yaml
+#            group: dev
+#            refresh: true
+#          - data-id: other.yaml
+#            group: dev
+#            refresh: true
+  config:
+    import:
+      - nacos:${spring.application.name}
+      - nacos:mybatis.yaml
+      - nacos:datasorcus.yaml
+      - nacos:other.yaml
 
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
