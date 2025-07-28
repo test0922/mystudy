@@ -6,6 +6,7 @@ import com.jay.gulimall.product.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -32,9 +33,16 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     }
 
     @Override
+    public void remvoeMenuByIds(List<Long> asList) {
+        //TODO 1、檢查當前刪除菜單有無被其他地方引用
+        baseMapper.deleteBatchIds(asList);
+    }
+    @Override
     public List<CategoryEntity> listWithTree() {
         //1、查出所有分類
         List<CategoryEntity> entities = baseMapper.selectList(null);
+        HashMap<String, Long[]> stringHashMap = new HashMap<>();
+
         //2、組裝成父子分類
         //2.1)、找到所有的一級分類
         List<CategoryEntity> level1Menus = entities.stream().filter(categoryEntity ->
@@ -50,7 +58,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 
     private List<CategoryEntity> getChildren(CategoryEntity root, List<CategoryEntity> all){
         List<CategoryEntity> children = all.stream().filter(categoryEntity -> {
-            return categoryEntity.getParentCid() == root.getCatId();
+            return categoryEntity.getParentCid().equals(root.getCatId());
         }).map(categoryEntity -> {
             categoryEntity.setChildren(getChildren(categoryEntity, all));
             return categoryEntity;

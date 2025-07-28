@@ -7,7 +7,15 @@
         <groupId>com.jay.gulimall</groupId>
         <artifactId>gulimall</artifactId>
         <version>0.0.1-SNAPSHOT</version>
+
+
     </parent>
+
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+
 
     <artifactId>gulimall-common</artifactId>
 
@@ -43,7 +51,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.8</version>
+            <version>1.18.24</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpcore --><dependency>
             <groupId>org.apache.httpcomponents</groupId>
