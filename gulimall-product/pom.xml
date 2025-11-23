@@ -39,6 +39,12 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+                <dependency>
+                    <groupId>io.grpc</groupId>
+                    <artifactId>grpc-xds</artifactId>
+                    <version>1.71.0</version>
+                    <scope>compile</scope>
+                </dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>

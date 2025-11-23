@@ -21,7 +21,7 @@
             <version>0.0.1-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
-                    <groupId>oorg.springframework.boot</groupId>
+                    <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-web</artifactId>
                 </exclusion>
             </exclusions>
@@ -33,6 +33,13 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.cloud</groupId>
+                    <artifactId>spring-cloud-gateway-grpc</artifactId>
+                </exclusion>
+            </exclusions>
+
         </dependency>
 
         <dependency>
@@ -40,6 +47,7 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
     <dependencyManagement>
         <dependencies>
@@ -57,6 +65,8 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+
         </dependencies>
     </dependencyManagement>
 

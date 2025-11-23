@@ -28,14 +28,21 @@ spring:
             - Query= url,qq
 
         ##http://localhost:10000/product/category/list/tree實際能訪問
-        ##http://localhost:88/apiproduct/category/list/tree目前 所以需要路徑重寫
+        ##http://localhost:88/api/product/category/list/tree目前 所以需要路徑重寫
         - id: product_router
           uri: lb://gulimall-product
           predicates:
             - Path=/api/product/**
           filters:
             - RewritePath=/api/(?<segment>.*),/$\{segment}
-
+        ##http://localhost:10000/product/category/list/tree實際能訪問
+        ##http://localhost:88/api/product/category/list/tree目前 所以需要路徑重寫
+        - id: third_router
+          uri: lb://gulimall-third
+          predicates:
+            - Path=/api/third/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
         ##前端項目， /api
         ##http://localhost:8080/renren-fast/api/captcha:jpg?uuid=760a9eb0-4f40-4e4b-83af-a6401e4723b7: 實際能訪問
         ##http://localhost:88/api/captcha:jpg?uuid=760a9eb0-4f40-4e4b-83af-a6401e4723b7: 目前 所以需要路徑重寫

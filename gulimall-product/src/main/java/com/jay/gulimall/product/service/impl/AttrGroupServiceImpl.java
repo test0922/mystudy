@@ -3,6 +3,7 @@ package com.jay.gulimall.product.service.impl;
 import com.jay.gulimall.product.dao.AttrGroupDao;
 import com.jay.gulimall.product.entity.AttrGroupEntity;
 import com.jay.gulimall.product.service.AttrGroupService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -23,6 +24,27 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
         );
 
         return new PageUtils(page);
+    }
+
+    @Override
+    public PageUtils queryPage(Map<String, Object> params, Long catelogId) {
+        String key = (String) params.get("key");
+        QueryWrapper<AttrGroupEntity> queryWrapper = new QueryWrapper<>();
+
+        if(catelogId.toString().equals("0")){
+            IPage<AttrGroupEntity> page = this.page(new Query<AttrGroupEntity>().getPage(params), queryWrapper);
+            return new PageUtils(page);
+        }else{
+            queryWrapper.eq("catelog_id",catelogId);
+            if(StringUtils.isNotEmpty(key)){
+                queryWrapper.and(w->
+                    w.like("attr_group_name", "%"+key+"%").or().like("descript", "%"+key+"%")
+                );
+            }
+            IPage<AttrGroupEntity> page = this.page(new Query<AttrGroupEntity>().getPage(params), queryWrapper);
+            return new PageUtils(page);
+        }
+
     }
 
 }
