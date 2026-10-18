@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.jay.common.utils.PageUtils;
 import com.jay.gulimall.product.entity.CategoryEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -21,5 +22,7 @@ public interface CategoryService extends IService<CategoryEntity> {
     List<CategoryEntity> listWithTree();
 
     void remvoeMenuByIds(List<Long> asList);
+
+    ArrayList<Long> getCatePath(Long catelogId);
 }
 

@@ -1,10 +1,14 @@
 package com.jay.gulimall.product.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 /**
@@ -45,4 +49,10 @@ public class AttrGroupEntity implements Serializable {
 	 */
 	private Long catelogId;
 
+	/**
+	 * 分組路徑
+	 */
+	@TableField(exist = false)
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
+	private ArrayList<Long> catePath;
 }

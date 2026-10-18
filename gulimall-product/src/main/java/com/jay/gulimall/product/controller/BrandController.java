@@ -6,6 +6,7 @@ import java.util.Map;
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
 import com.jay.common.validator.group.UpdateGroup;
 import com.jay.gulimall.product.service.BrandService;
+import com.jay.gulimall.product.service.CategoryBrandRelationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
@@ -35,6 +36,9 @@ import javax.validation.Valid;
 public class BrandController {
     @Autowired
     private BrandService brandService;
+
+    @Autowired
+    private CategoryBrandRelationService categoryBrandRelationService;
 
     /**
      * 列表
@@ -77,6 +81,9 @@ public class BrandController {
 //    @RequiresPermissions("product:brand:update")
     public R update(@Validated({UpdateGroup.class}) @RequestBody BrandEntity brand){
 		brandService.updateById(brand);
+        if(!brand.getName().isEmpty()){
+            categoryBrandRelationService.updateBrandName(brand);
+        }
 
         return R.ok();
     }

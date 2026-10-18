@@ -31,19 +31,37 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
         String key = (String) params.get("key");
         QueryWrapper<AttrGroupEntity> queryWrapper = new QueryWrapper<>();
 
-        if(catelogId.toString().equals("0")){
-            IPage<AttrGroupEntity> page = this.page(new Query<AttrGroupEntity>().getPage(params), queryWrapper);
-            return new PageUtils(page);
-        }else{
+//        if(catelogId.toString().equals("0")){
+//            IPage<AttrGroupEntity> page = this.page(new Query<AttrGroupEntity>().getPage(params), queryWrapper);
+//            return new PageUtils(page);
+//        }else{
+//            queryWrapper.eq("catelog_id",catelogId);
+//            if(StringUtils.isNotEmpty(key)){
+//                queryWrapper.and(w->
+//                    w.like("attr_group_name", "%"+key+"%").or().like("descript", "%"+key+"%")
+//                );
+//            }
+//            IPage<AttrGroupEntity> page = this.page(new Query<AttrGroupEntity>().getPage(params), queryWrapper);
+//            return new PageUtils(page);
+//        }
+
+        if(!catelogId.toString().equals("0")){
             queryWrapper.eq("catelog_id",catelogId);
-            if(StringUtils.isNotEmpty(key)){
-                queryWrapper.and(w->
-                    w.like("attr_group_name", "%"+key+"%").or().like("descript", "%"+key+"%")
-                );
-            }
-            IPage<AttrGroupEntity> page = this.page(new Query<AttrGroupEntity>().getPage(params), queryWrapper);
-            return new PageUtils(page);
         }
+
+        if(StringUtils.isNotEmpty(key)){
+            if(!catelogId.toString().equals("0")){
+                queryWrapper.and(
+                        w-> w.like("attr_group_name", "%"+key+"%").or().like("descript", "%"+key+"%")
+                );
+            }else{
+                queryWrapper.like("attr_group_name", "%"+key+"%").or().like("descript", "%"+key+"%");
+            }
+
+        }
+
+        IPage<AttrGroupEntity> page = this.page(new Query<AttrGroupEntity>().getPage(params), queryWrapper);
+        return new PageUtils(page);
 
     }
 

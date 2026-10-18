@@ -6,9 +6,7 @@ import com.jay.gulimall.product.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -37,6 +35,14 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         //TODO 1、檢查當前刪除菜單有無被其他地方引用
         baseMapper.deleteBatchIds(asList);
     }
+
+    @Override
+    public ArrayList<Long> getCatePath(Long catelogId) {
+        ArrayList<Long> catePath = new ArrayList<Long>();
+        getCatePath(catelogId, catePath);
+        return catePath;
+    }
+
     @Override
     public List<CategoryEntity> listWithTree() {
         //1、查出所有分類
@@ -66,6 +72,15 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
             return (menu1.getSort() == null ?0 : menu1.getSort()) - (menu2.getSort() == null ?0 : menu2.getSort());
         }).collect(Collectors.toList());
         return  children;
+    }
+
+    private  void getCatePath(Long cateId, ArrayList<Long> catePath){
+        CategoryEntity categoryEntity = baseMapper.selectById(cateId);
+        Long parentCid = categoryEntity.getParentCid();
+        if(!"0".equals(parentCid.toString())){
+            getCatePath(parentCid, catePath);
+        }
+        catePath.add(cateId);
     }
 
 }
